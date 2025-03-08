@@ -2,9 +2,17 @@
 FROM node:18 as build
 
 WORKDIR /app
-COPY package.json package-lock.json ./
+
+# Copier les fichiers package.json et package-lock.json depuis le sous-dossier 'client'
+COPY client/package.json client/package-lock.json ./
+
+# Installer les dépendances
 RUN npm install
-COPY . ./
+
+# Copier tous les autres fichiers de l'application dans le conteneur
+COPY client/ ./
+
+# Construire l'application React
 RUN npm run build
 
 # Étape 2 : Servir l'application avec Nginx
