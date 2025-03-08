@@ -3,14 +3,15 @@ FROM node:18 as build
 
 WORKDIR /app
 
-# Copier les fichiers package.json et package-lock.json depuis le sous-dossier 'client'
-COPY client/package.json client/package-lock.json ./
+# Copier package.json et package-lock.json depuis le dossier 'planification_des_planing'
+COPY planification_des_planing/package.json planification_des_planing/package-lock.json ./
 
 # Installer les dépendances
 RUN npm install
 
-# Copier tous les autres fichiers de l'application dans le conteneur
-COPY client/ ./
+# Copier les fichiers sources nécessaires à la construction
+COPY planification_des_planing/src ./src
+COPY planification_des_planing/public ./public
 
 # Construire l'application React
 RUN npm run build
