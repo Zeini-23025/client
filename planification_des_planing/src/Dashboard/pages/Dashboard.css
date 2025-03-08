@@ -1,0 +1,332 @@
+/* Base styles and typography */
+:root {
+  --primary-font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --content-width: min(100% - 2rem, 1400px);
+  --spacing-unit: clamp(0.5rem, 2vw, 1rem);
+  --card-min-width: clamp(250px, 45%, 300px);
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ffffff;
+  font-family: var(--primary-font);
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Layout and containers */
+.dashboard-content {
+  padding: var(--spacing-unit);
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-unit);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-unit);
+  padding: var(--spacing-unit) 0;
+  width: 100%;
+}
+
+.dashboard-header h2 {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 600;
+  color: #333;
+  line-height: 1.2;
+}
+
+/* Buttons and controls */
+.export-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Grid layouts with improved responsiveness */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), 1fr));
+  gap: var(--spacing-unit);
+  width: 100%;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-unit);
+  width: 100%;
+}
+
+.chart-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), 1fr));
+  gap: var(--spacing-unit);
+  width: 100%;
+}
+
+/* Cards and containers with improved scaling */
+.chart-card {
+  background: white;
+  border-radius: 0.5rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 200px;
+  height: 100%;
+}
+
+.chart-header {
+  margin-bottom: var(--spacing-unit);
+  text-align: center;
+  width: 100%;
+}
+
+.chart-header h3 {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  font-weight: 600;
+  color: #333;
+}
+
+/* Action buttons with improved layout */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-unit);
+  width: 100%;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-width: min(120px, 100%);
+  max-width: 100%;
+}
+
+.action-btn.primary {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.action-btn.primary:hover {
+  background-color: #2d2d2d;
+  transform: translateY(-2px);
+}
+
+.action-btn.secondary {
+  background-color: transparent;
+  color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+}
+
+.action-btn.secondary:hover {
+  background-color: #f3f4f6;
+  transform: translateY(-2px);
+}
+
+/* Icons and visual elements */
+.btn-icon {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Stats and widgets with improved scaling */
+.stat-card {
+  transition: transform 0.2s ease-in-out;
+  background: white;
+  border-radius: 0.5rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.dashboard-table {
+  width: 100%;
+  margin: var(--spacing-unit) 0;
+  overflow: auto;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: var(--spacing-unit) 0;
+  padding-bottom: var(--spacing-unit);
+}
+
+.widget {
+  background: white;
+  border-radius: 0.5rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%;
+}
+
+/* Improved responsive breakpoints */
+@media (max-width: 1200px) {
+  .chart-container {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(clamp(200px, 45%, 250px), 1fr)
+    );
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --card-min-width: 100%;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+
+  .export-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .chart-card,
+  .stat-card,
+  .widget {
+    min-height: auto;
+  }
+}
+
+/* Ensure proper scrolling for tables on mobile */
+@media (max-width: 480px) {
+  .dashboard-table-wrapper {
+    margin: 0 calc(var(--spacing-unit) * -1);
+    padding: 0 var(--spacing-unit);
+    width: calc(100% + (var(--spacing-unit) * 2));
+  }
+
+  .dashboard-content {
+    padding: var(--spacing-unit) calc(var(--spacing-unit) / 2);
+  }
+}
+
+/* Dark mode support with improved contrast */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a1a1a;
+  }
+
+  .chart-card,
+  .stat-card,
+  .widget,
+  .dashboard-table {
+    background-color: #2d2d2d;
+    color: #ffffff;
+  }
+
+  .chart-header h3,
+  .dashboard-header h2 {
+    color: #ffffff;
+  }
+
+  .export-btn {
+    background-color: #2d2d2d;
+    border-color: #404040;
+    color: #ffffff;
+  }
+
+  .action-btn.secondary {
+    color: #ffffff;
+    border-color: #404040;
+  }
+}
+
+/* Ensure content stays within viewport with improved scrolling */
+.dashboard-content,
+.stats-grid,
+.charts-grid,
+.chart-container {
+  max-width: 100%;
+}
+
+/* Smooth scrolling for the entire dashboard */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Improved focus styles for accessibility */
+.action-btn:focus,
+.export-btn:focus {
+  outline: 2px solid #4a90e2;
+  outline-offset: 2px;
+}
+
+/* Remove outline for mouse users */
+.action-btn:focus:not(:focus-visible),
+.export-btn:focus:not(:focus-visible) {
+  outline: none;
+}

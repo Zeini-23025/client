@@ -1,0 +1,313 @@
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f6f9;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 90px;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
+  width: calc(100% - 90px);
+  background-color: #f4f6f9;
+}
+
+.main-content.sidebar-open {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+}
+
+.dashboard-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-breadcrumb {
+  background: #f5f5f5;
+  padding: 1rem 2rem;
+  /* border-bottom: 1px solid #e5e7eb; */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.breadcrumb-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.breadcrumb-path {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid #c5c5c5;
+}
+
+.breadcrumb-item {
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-item:hover {
+  color: #111827;
+}
+
+.breadcrumb-item.active {
+  color: #111827;
+  font-weight: 500;
+}
+
+.breadcrumb-separator {
+  color: #9ca3af;
+  margin: 0 0.25rem;
+}
+
+.breadcrumb-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.upgrade-button, .export-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.upgrade-button {
+  background-color: #f3e8ff;
+  color: #9333ea;
+}
+
+.upgrade-button:hover {
+  background-color: #ede9fe;
+}
+
+.export-button {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.export-button:hover {
+  background-color: #d1fae5;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 0px 2rem;
+  background: #f5f5f5;
+  max-width: 1400px;
+  margin:auto;
+  width: 100%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-footer {
+  background: #ffffff;
+  padding: 1rem;
+  border-top: 1px solid #e5e7eb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Responsive Design avec animations améliorées */
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .main-content.sidebar-open {
+    margin-left: 0;
+    width: 100%;
+    transform: translateX(250px);
+  }
+
+  /* .dashboard-main {
+    padding: 1rem;
+  } */
+
+  .breadcrumb-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .breadcrumb-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 640px) {
+  .breadcrumb-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .upgrade-button, .export-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Media Queries pour la responsivité */
+@media screen and (max-width: 768px) {
+  .main-content,
+  .main-content.sidebar-open {
+    margin-left: 0;
+    width: 100%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* .dashboard-main {
+    padding: 0.75rem;
+  } */
+
+  .sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-content.sidebar-open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 97;
+    opacity: 0;
+    animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Ajustements pour les très petits écrans */
+@media screen and (max-width: 480px) {
+  /* .dashboard-main {
+    padding: 10px;
+  } */
+
+  .dashboard-navbar {
+    padding: 10px;
+  }
+
+  .dashboard-footer {
+    padding: 10px;
+  }
+}
+
+/* Ajustements pour les grands écrans */
+@media screen and (min-width: 1400px) {
+  .dashboard-main {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+/* Styles pour le mode sombre (optionnel) */
+@media (prefers-color-scheme: dark) {
+  .dashboard-container {
+    background: #e9e6e6;
+  }
+
+  .dashboard-navbar,
+  .dashboard-footer {
+    background: #e0e0e0;
+    color: #fff;
+  }
+
+  .dashboard-main {
+    background: #f5f5f5;
+    color: #000000;
+  }
+}
+
+/* Animations */
+.main-content {
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar {
+  transition: transform 0.3s ease;
+}
+
+/* Styles pour améliorer la lisibilité du contenu */
+.dashboard-main {
+  line-height: 1.6;
+}
+
+/* Styles pour les scrollbars personnalisées */
+.dashboard-main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dashboard-main::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.dashboard-main::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.dashboard-main::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+/* Smooth transition for all transformable elements */
+.dashboard-navbar,
+.dashboard-main,
+.dashboard-footer {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Shadow animation */
+.dashboard-navbar:hover {
+  box-shadow: 0 4px 8px rgba(82, 81, 81, 0.12);
+}
+
+/* Amélioration des animations */
+.dashboard-container * {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Optimisation des performances d'animation */
+.main-content,
+.dashboard-navbar,
+.dashboard-breadcrumb,
+.dashboard-main,
+.dashboard-footer {
+  will-change: transform, margin-left, width;
+} 
