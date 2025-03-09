@@ -1,3 +1,5 @@
+# 🏆 Nom de l'équipe : **Not Found**
+
 # Gestion d'Emploi du Temps - Frontend
 
 ## 📌 Objectif
@@ -39,12 +41,19 @@ Un pipeline **CI/CD** est configuré via **GitHub Actions** pour automatiser le 
 - ✅ **Workflow GitHub Actions** automatisant le build et le push de l’image Docker.
 - ✅ **URL du dépôt Docker Hub** contenant l’image Docker du frontend.
 
-## 📎 Liens Utiles
 
-- 🔗 [Dépôt GitHub - Frontend](https://github.com/Zeini-23025/client)
-- 🐳 [Dépôt Docker Hub - Frontend](https://hub.docker.com/r/zeini/docker-client)
-- 🔗 [Dépôt GitHub - Backend](https://github.com/Zeini-23025/server)
-- 🐳 [Dépôt Docker Hub - Backend](https://hub.docker.com/r/zeini/docker-server)
+
+## 🔹 Dépôts GitHub
+🔗 **Backend** : [GitHub - Server](https://github.com/Zeini-23025/server)  
+🔗 **Frontend** : [GitHub - Client](https://github.com/Zeini-23025/client)  
+
+## 🐳 Dépôts Docker Hub
+🐳 **Backend** : [Docker Hub - Server](https://hub.docker.com/r/zeini/docker-server)  
+🐳 **Frontend** : [Docker Hub - Client](https://hub.docker.com/r/zeini/docker-client)  
+
+## 🚀 Accéder aux applications
+🔹 **Backend** : [🌍 docker-server-m0lg.onrender.com](https://docker-server-m0lg.onrender.com/)  
+🔹 **Frontend** : [🌍 docker-client-hhi7.onrender.com](https://docker-client-hhi7.onrender.com)  
 
 ---
 
