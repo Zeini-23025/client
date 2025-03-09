@@ -13,10 +13,8 @@
 }
 
 /* Container principal avec animation de fade-in */
-.matieres-container {
+.enseignants-container {
   padding: 20px;
-  max-width: 100%;
-  position: relative;
   animation: fadeIn 0.5s ease-in-out;
 }
 
@@ -32,7 +30,7 @@
 }
 
 /* En-tête avec effet de profondeur */
-.matieres-header {
+.enseignants-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -42,11 +40,9 @@
   border-radius: 10px;
   box-shadow: 0 2px 8px var(--shadow-color);
   transition: all var(--transition-speed) ease;
-  flex-wrap: wrap;
-  gap: 1rem;
 }
 
-.matieres-header h1 {
+.enseignants-header h1 {
   color: var(--text-color);
   font-size: 24px;
   font-weight: 600;
@@ -58,7 +54,6 @@
   display: flex;
   gap: 20px;
   align-items: center;
-  flex-wrap: wrap;
 }
 
 /* Barre de recherche améliorée */
@@ -126,7 +121,7 @@
 }
 
 /* Conteneur de table avec animation */
-.matieres-table-container {
+.enseignants-table-container {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 8px var(--shadow-color);
@@ -146,22 +141,21 @@
 }
 
 /* Style de table amélioré */
-.matieres-table {
+.enseignants-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  min-width: 800px;
 }
 
-.matieres-table th,
-.matieres-table td {
+.enseignants-table th,
+.enseignants-table td {
   padding: 16px 20px;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
   transition: background-color var(--transition-speed) ease;
 }
 
-.matieres-table th {
+.enseignants-table th {
   background-color: var(--background-light);
   font-weight: 600;
   color: var(--text-color);
@@ -170,11 +164,11 @@
   letter-spacing: 0.5px;
 }
 
-.matieres-table tr {
+.enseignants-table tr {
   transition: all var(--transition-speed) ease;
 }
 
-.matieres-table tr:hover {
+.enseignants-table tr:hover {
   background-color: rgba(0, 0, 0, 0.02);
 }
 
@@ -240,7 +234,7 @@
   background-color: white;
   border-radius: 12px;
   width: 90%;
-  max-width: 600px;
+  max-width: 500px;
   animation: scaleIn 0.3s ease-out;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
@@ -258,8 +252,6 @@
 
 .modal-content {
   padding: 24px;
-  max-height: 85vh;
-  overflow-y: auto;
 }
 
 .modal h2 {
@@ -267,19 +259,11 @@
   color: var(--text-color);
   font-size: 20px;
   font-weight: 600;
-  border-bottom: 2px solid var(--primary-color);
-  padding-bottom: 0.5rem;
-  text-align: center;
 }
 
 /* Groupes de formulaire améliorés */
 .form-group {
   margin-bottom: 20px;
-  position: relative;
-  background: white;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .form-group label {
@@ -289,8 +273,7 @@
   color: var(--text-color);
 }
 
-.form-group input[type="text"],
-.form-group input[type="number"] {
+.form-group input {
   width: 100%;
   padding: 12px;
   border: 2px solid var(--border-color);
@@ -299,41 +282,15 @@
   transition: all var(--transition-speed) ease;
 }
 
-.form-group input[type="text"]:focus,
-.form-group input[type="number"]:focus {
+.form-group input:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
   outline: none;
 }
 
-/* Style spécifique pour les groupes de checkbox */
-.checkbox-group {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 1rem;
-  padding: 0.5rem;
-  background: var(--background-light);
-  border-radius: 8px;
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 6px;
-  transition: background-color var(--transition-speed) ease;
-}
-
-.checkbox-label:hover {
-  background-color: rgba(76, 175, 80, 0.1);
-}
-
-.checkbox-label input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--primary-color);
+.form-group input:disabled {
+  background-color: var(--background-light);
+  cursor: not-allowed;
 }
 
 /* Actions du modal */
@@ -342,8 +299,6 @@
   justify-content: flex-end;
   gap: 12px;
   margin-top: 24px;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-color);
 }
 
 .submit-btn,
@@ -354,7 +309,6 @@
   transition: all var(--transition-speed) ease;
   border: none;
   cursor: pointer;
-  min-width: 120px;
 }
 
 .submit-btn {
@@ -382,25 +336,6 @@
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
-}
-
-/* Style pour le scroll du modal */
-.modal-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.modal-content::-webkit-scrollbar-track {
-  background: var(--background-light);
-  border-radius: 4px;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
-  border-radius: 4px;
-}
-
-.modal-content::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-hover);
 }
 
 /* États de chargement et d'erreur */
@@ -449,11 +384,7 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .matieres-container {
-    padding: 16px;
-  }
-
-  .matieres-header {
+  .enseignants-header {
     flex-direction: column;
     gap: 16px;
   }
@@ -472,7 +403,7 @@
     justify-content: center;
   }
 
-  .matieres-table {
+  .enseignants-table {
     font-size: 14px;
   }
 
@@ -480,78 +411,4 @@
     width: 95%;
     margin: 10px;
   }
-
-  .modal-content {
-    padding: 16px;
-  }
-
-  .form-group {
-    padding: 12px;
-  }
-
-  .checkbox-group {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
 }
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .matieres-container {
-    background-color: #1a1a1a;
-  }
-
-  .matieres-header {
-    background: #2d2d2d;
-  }
-
-  .matieres-header h1 {
-    color: #fff;
-  }
-
-  .search-box input {
-    background-color: #333;
-    border-color: #404040;
-    color: #fff;
-  }
-
-  .matieres-table-container {
-    background: #2d2d2d;
-  }
-
-  .matieres-table th {
-    background-color: #333;
-    color: #fff;
-  }
-
-  .matieres-table td {
-    color: #fff;
-  }
-
-  .modal,
-  .modal-content,
-  .form-group {
-    background: #2d2d2d;
-    color: #fff;
-  }
-
-  .form-group input[type="text"],
-  .form-group input[type="number"] {
-    background-color: #333;
-    border-color: #404040;
-    color: #fff;
-  }
-
-  .checkbox-group {
-    background: #333;
-  }
-
-  .checkbox-label {
-    color: #fff;
-  }
-
-  .modal-content::-webkit-scrollbar-track {
-    background: #333;
-  }
-}
-

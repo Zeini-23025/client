@@ -1,0 +1,360 @@
+/* Variables */
+:root {
+  --primary-color: #2196f3;
+  --primary-dark: #1976d2;
+  --error-color: #f44336;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --text-color: #333;
+  --border-color: #e0e0e0;
+  --background-light: #f5f5f5;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+  --grid-border-color: #ddd;
+  --seance-bg: #e3f2fd;
+  --seance-border: #bbdefb;
+}
+
+/* Container */
+.emploi-temps-container {
+  padding: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Header */
+.emploi-temps-header {
+  margin-bottom: 2rem;
+}
+
+.emploi-temps-header h1 {
+  font-size: 2rem;
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+/* Week Selector */
+.week-selector {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.week-icon {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
+.week-input {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color var(--transition-speed);
+}
+
+.week-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: white;
+  min-width: 200px;
+  transition: border-color var(--transition-speed);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: white;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--transition-speed);
+}
+
+.action-btn:hover:not(:disabled) {
+  background-color: var(--background-light);
+  transform: translateY(-1px);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-btn.refresh {
+  color: var(--primary-color);
+}
+
+/* Grid Container */
+.emploi-temps-grid-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  overflow: hidden;
+}
+
+.semaine-info {
+  padding: 1rem;
+  background-color: var(--background-light);
+  border-bottom: 1px solid var(--grid-border-color);
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+/* Grid */
+.emploi-temps-grid {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+}
+
+.grid-header {
+  display: grid;
+  grid-template-columns: 100px repeat(6, 1fr);
+  background-color: var(--background-light);
+  border-bottom: 2px solid var(--grid-border-color);
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: 100px repeat(6, 1fr);
+  border-bottom: 1px solid var(--grid-border-color);
+}
+
+.grid-cell {
+  padding: 1rem;
+  border-right: 1px solid var(--grid-border-color);
+  min-height: 100px;
+}
+
+.grid-cell.header {
+  font-weight: 600;
+  text-align: center;
+  min-height: auto;
+}
+
+.grid-cell.jour {
+  font-weight: 500;
+  background-color: var(--background-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: auto;
+}
+
+/* Seance */
+.grid-cell.seance {
+  transition: background-color var(--transition-speed);
+}
+
+.grid-cell.seance:hover {
+  background-color: var(--background-light);
+}
+
+.grid-cell.seance.has-seance {
+  background-color: var(--seance-bg);
+  border: 1px solid var(--seance-border);
+}
+
+.seance-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.seance-matiere {
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.seance-enseignant {
+  font-size: 0.9rem;
+}
+
+.seance-groupe {
+  font-size: 0.9rem;
+  color: var(--warning-color);
+}
+
+.seance-type {
+  font-size: 0.8rem;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+/* No Week Selected State */
+.no-week-selected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  text-align: center;
+  color: var(--text-color);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.no-week-selected .calendar-icon {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.no-week-selected p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Loading and Error States */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-color);
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: var(--error-color);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* Print Styles */
+@media print {
+  .emploi-temps-container {
+    padding: 0;
+  }
+
+  .emploi-temps-header {
+    margin-bottom: 1rem;
+  }
+
+  .header-actions {
+    display: none;
+  }
+
+  .emploi-temps-grid-container {
+    box-shadow: none;
+  }
+
+  .grid-cell {
+    border: 1px solid var(--grid-border-color) !important;
+    page-break-inside: avoid;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .actions {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 768px) {
+  .emploi-temps-container {
+    padding: 1rem;
+  }
+
+  .grid-cell {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .seance-content {
+    gap: 0.25rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #e0e0e0;
+    --border-color: #424242;
+    --background-light: #333;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --grid-border-color: #424242;
+    --seance-bg: #1a237e;
+    --seance-border: #283593;
+  }
+
+  .emploi-temps-container {
+    background-color: #1a1a1a;
+  }
+
+  .emploi-temps-grid-container {
+    background-color: #2d2d2d;
+  }
+
+  .week-input,
+  .filter-select,
+  .action-btn {
+    background-color: #333;
+    color: var(--text-color);
+  }
+
+  .no-week-selected {
+    background-color: #2d2d2d;
+  }
+
+  .error-message {
+    background-color: #4a1c1c;
+  }
+
+  .seance-content {
+    color: #fff;
+  }
+
+  .seance-type {
+    color: #ccc;
+  }
+}

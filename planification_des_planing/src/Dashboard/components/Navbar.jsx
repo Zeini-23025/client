@@ -5,13 +5,10 @@ import {
   faBars,
   faBell, 
   faCog, 
-  faEnvelopeOpen, 
   faSearch, 
   faSignOutAlt, 
   faUserShield,
   faUser,
-  faWallet,
-  faChartLine
 } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import "./Navbar.css";
@@ -66,35 +63,7 @@ const Navbar = ({ onToggleSidebar }) => {
       </div>
 
       <div className="navbar-right">
-        {/* Notifications */}
-        <div className="nav-item">
-          <button 
-            className="notification-btn"
-            onClick={() => setShowNotifications(!showNotifications)}
-          >
-            <FontAwesomeIcon icon={faBell} />
-            {userInfo.notifications.some(n => !n.read) && (
-              <span className="notification-badge"></span>
-            )}
-          </button>
-          
-          {showNotifications && (
-            <div className="notifications-menu">
-              <div className="notifications-header">
-                <h3>Notifications</h3>
-                <button className="mark-all-read">Tout marquer comme lu</button>
-              </div>
-              <div className="notifications-list">
-                {userInfo.notifications.map(notification => (
-                  <div key={notification.id} className={`notification-item ${!notification.read ? 'unread' : ''}`}>
-                    <p>{notification.message}</p>
-                    <span className="notification-time">{notification.time}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+        
 
         {/* User Profile */}
         <div className="nav-item dropdown">

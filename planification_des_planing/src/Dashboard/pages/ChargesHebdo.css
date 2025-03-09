@@ -1,0 +1,396 @@
+/* Variables pour les couleurs et les transitions */
+:root {
+  --primary-color: #4caf50;
+  --primary-hover: #45a049;
+  --danger-color: #f44336;
+  --danger-hover: #da190b;
+  --warning-color: #ff9800;
+  --edit-color: #2196f3;
+  --background-light: #f8f9fa;
+  --border-color: #ddd;
+  --text-color: #333;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+}
+
+/* Container principal avec animation de fade-in */
+.charges-container {
+  padding: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* En-tête avec effet de profondeur */
+.charges-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: all var(--transition-speed) ease;
+}
+
+.charges-header h1 {
+  color: var(--text-color);
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Actions header avec espacement amélioré */
+.header-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Barre de recherche améliorée */
+.search-box {
+  position: relative;
+  width: 300px;
+  transition: all var(--transition-speed) ease;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 40px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all var(--transition-speed) ease;
+  background-color: white;
+}
+
+.search-box input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  transition: color var(--transition-speed) ease;
+}
+
+.search-box input:focus + .search-icon {
+  color: var(--primary-color);
+}
+
+/* Sélecteur de semaine */
+.week-selector input {
+  padding: 12px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all var(--transition-speed) ease;
+  background-color: white;
+}
+
+.week-selector input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  outline: none;
+}
+
+/* Alertes de disponibilité */
+.disponibilite-alerts {
+  background-color: #fff3e0;
+  border: 1px solid var(--warning-color);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.disponibilite-alerts h3 {
+  color: var(--warning-color);
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.disponibilite-alerts ul {
+  margin: 0;
+  padding: 0 0 0 20px;
+  list-style-type: none;
+}
+
+.disponibilite-alerts li {
+  margin-bottom: 8px;
+  color: var(--text-color);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.disponibilite-alerts li:last-child {
+  margin-bottom: 0;
+}
+
+/* Table des charges */
+.charges-table-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  overflow: hidden;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.charges-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.charges-table th,
+.charges-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.charges-table th {
+  background-color: var(--background-light);
+  font-weight: 600;
+  color: var(--text-color);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.charges-table tr {
+  transition: background-color var(--transition-speed) ease;
+}
+
+.charges-table tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.charges-table input[type="number"] {
+  width: 80px;
+  padding: 8px;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all var(--transition-speed) ease;
+}
+
+.charges-table input[type="number"]:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  outline: none;
+}
+
+/* Boutons d'action */
+.action-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all var(--transition-speed) ease;
+  background-color: var(--background-light);
+  color: var(--text-color);
+}
+
+.action-btn:hover {
+  background-color: var(--border-color);
+  transform: translateY(-1px);
+}
+
+.action-btn.save {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.action-btn.save:hover {
+  background-color: var(--primary-hover);
+}
+
+/* États de chargement et d'erreur */
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+  color: var(--text-color);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: var(--danger-color);
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 8px;
+  border: 1px solid #ef9a9a;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .charges-table input[type="number"] {
+    width: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .charges-container {
+    padding: 16px;
+  }
+
+  .charges-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .search-box,
+  .week-selector input {
+    width: 100%;
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .charges-table {
+    font-size: 14px;
+  }
+
+  .charges-table th,
+  .charges-table td {
+    padding: 12px 8px;
+  }
+
+  .charges-table input[type="number"] {
+    width: 100%;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .charges-container {
+    background-color: #1a1a1a;
+  }
+
+  .charges-header,
+  .charges-table-container {
+    background: #2d2d2d;
+  }
+
+  .charges-header h1 {
+    color: #fff;
+  }
+
+  .search-box input,
+  .week-selector input,
+  .charges-table input[type="number"] {
+    background-color: #333;
+    border-color: #404040;
+    color: #fff;
+  }
+
+  .charges-table th {
+    background-color: #333;
+    color: #fff;
+  }
+
+  .charges-table td {
+    color: #fff;
+  }
+
+  .disponibilite-alerts {
+    background-color: #332800;
+    border-color: var(--warning-color);
+  }
+
+  .disponibilite-alerts li {
+    color: #fff;
+  }
+
+  .action-btn {
+    background-color: #333;
+    color: #fff;
+  }
+
+  .action-btn:hover {
+    background-color: #404040;
+  }
+}

@@ -2,50 +2,82 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHome,
-  faTableCells,
-  faCog,
-  faChartArea,
+  faBook,
+  faClipboardList,
+  faCalendarAlt,
+  faChalkboardTeacher,
   faSearch,
-  faFileInvoiceDollar,
+  faUsers,
+  faClock,
+  faListCheck,
+  faTableCells,
   faBars,
-  faCode,
-  faMoneyBillTransfer,
-
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
-import './Sidebar.css'; 
+import './Sidebar.css';
 
 function Sidebar({ isOpen, setIsOpen }) {
   const [activeSubmenu, setActiveSubmenu] = useState(null);
 
   const handleSubmenuClick = (index, e) => {
-    e.preventDefault(); // Prevent navigation
+    e.preventDefault();
     setActiveSubmenu(activeSubmenu === index ? null : index);
   };
 
   const menuItems = [
-    { 
-      icon: faHome, 
-      text: 'Dashboard', 
+    {
+      icon: faHome,
+      text: 'Dashboard',
       path: '/dashboard',
     },
-    { 
-      icon: faTableCells,
-      text: 'Gestion des matiers',
+    {
+      icon: faBook,
+      text: 'Gestion des matières',
       path: '/dashboard/matieres',
     },
-
-    // { icon: faCog, text: 'Setting', path: '/dashboard/settings' },
+    {
+      icon: faChalkboardTeacher,
+      text: 'Gestion des enseignants',
+      path: '/dashboard/enseignants',
+      subItems: [
+        { text: 'Enseignants', path: '/dashboard/enseignants' },
+        { text: 'Disponibilités', path: '/dashboard/enseignants/disponibilites', icon: faCalendarAlt },
+      ],
+    },
+    { text: 'Charges hebdomadaires', path: '/dashboard/charges-hebdo', icon: faClipboardList },
+    {
+      icon: faUsers,
+      text: 'Gestion des groupes',
+      path: '/dashboard/groupes',
+    },
+    {
+      icon: faCalendarAlt,
+      text: 'Calendrier',
+      path: '/dashboard/calendrier',
+    },
+    {
+      icon: faListCheck,
+      text: 'Affectations',
+      path: '/dashboard/affectations',
+    },
+    {
+      icon: faClock,
+      text: 'Contraintes horaires',
+      path: '/dashboard/contraintes',
+    },
+    {
+      icon: faTableCells,
+      text: 'Emploi du temps',
+      path: '/dashboard/emploi-temps',
+    },
   ];
 
   return (
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
-      {/* Logo Section */}
       <div className="logo-details">
         <div className={`logo-content ${!isOpen ? 'hidden' : ''}`}>
-          {/* <FontAwesomeIcon icon={faCode} className="icon" /> */}
-          <span className="logo-name">Planing</span>
+          <span className="logo-name">Planning</span>
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -55,10 +87,8 @@ function Sidebar({ isOpen, setIsOpen }) {
         </button>
       </div>
 
-      {/* Navigation List */}
       <div className="nav-list-container">
         <ul className="nav-list">
-          {/* Search Bar */}
           <li className="search-box">
             <div className="search-wrapper">
               <input
@@ -73,11 +103,10 @@ function Sidebar({ isOpen, setIsOpen }) {
             </div>
           </li>
 
-          {/* Menu Items */}
           {menuItems.map((item, index) => (
             <li key={index} className="nav-item">
-              <Link 
-                to={item.path} 
+              <Link
+                to={item.path}
                 className="nav-link"
                 onClick={(e) => item.subItems && handleSubmenuClick(index, e)}
               >
@@ -92,6 +121,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                   {item.subItems.map((subItem, subIndex) => (
                     <li key={subIndex}>
                       <Link to={subItem.path} className="sub-link">
+                        {subItem.icon && <FontAwesomeIcon icon={subItem.icon} className="sub-icon" />}
                         {subItem.text}
                       </Link>
                     </li>
@@ -102,7 +132,6 @@ function Sidebar({ isOpen, setIsOpen }) {
           ))}
         </ul>
       </div>
-
     </div>
   );
 }
