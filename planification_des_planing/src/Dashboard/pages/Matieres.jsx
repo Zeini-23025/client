@@ -39,6 +39,8 @@ const Matieres = () => {
     try {
       setLoading(true);
       const response = await apiServices.matieres.list();
+      const emploiTemps = await apiServices.emploiTemps.generer();
+      console.log(emploiTemps.data);
       setMatieres(response.data);
       setError(null);
     } catch (err) {

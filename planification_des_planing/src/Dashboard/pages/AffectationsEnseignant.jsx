@@ -156,15 +156,22 @@ const AffectationsEnseignant = () => {
   };
 
   const filteredAffectations = affectations.filter(affectation => {
-    const matchesSearch = 
-      affectation.enseignant.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      affectation.matiere.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      affectation.groupe.nom.toLowerCase().includes(searchTerm.toLowerCase());
+    // Vérifier si les objets et leurs propriétés existent
+    const enseignantNom = affectation?.enseignant?.nom || '';
+    const matiereNom = affectation?.matiere?.nom || '';
+    const groupeNom = affectation?.groupe?.nom || '';
+    
+    const matchesSearch = searchTerm === '' || (
+        enseignantNom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        matiereNom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        groupeNom.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-    const matchesFilters = 
-      (!filters.enseignant || affectation.enseignant.id === filters.enseignant) &&
-      (!filters.matiere || affectation.matiere.id === filters.matiere) &&
-      (!filters.groupe || affectation.groupe.id === filters.groupe);
+    const matchesFilters = (
+        (!filters.enseignant || affectation?.enseignant?.id === filters.enseignant) &&
+        (!filters.matiere || affectation?.matiere?.id === filters.matiere) &&
+        (!filters.groupe || affectation?.groupe?.id === filters.groupe)
+    );
 
     return matchesSearch && matchesFilters;
   });
