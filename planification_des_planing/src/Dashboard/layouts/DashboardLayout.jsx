@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import './DashboardLayout.css';
 
 function DashboardLayout() {
@@ -62,10 +61,7 @@ function DashboardLayout() {
         <div className="dashboard-main">
           <Outlet />
         </div>
-        
-        <div className="dashboard-footer">
-          <Footer />
-        </div>
+
       </div>
     </div>
   );

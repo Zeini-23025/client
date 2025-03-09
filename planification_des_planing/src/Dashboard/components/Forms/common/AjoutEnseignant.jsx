@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiServices } from '../../../../api';
 import "./AjoutEnseignant.css";
 
 const AjoutEnseignant = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [enseignants, setEnseignants] = useState([]);
+    
     const [formData, setFormData] = useState({
+        id: '',
+        id: '',
         nom: '',
         prenom: '',
-        grade: '',
         email: '',
-        telephone: '',
-        specialite: ''
+        telephone: ''
     });
 
     const handleSubmit = (e) => {
@@ -70,36 +75,12 @@ const AjoutEnseignant = () => {
                                     type="tel" 
                                     value={formData.telephone}
                                     onChange={(e) => setFormData({...formData, telephone: e.target.value})}
-                                    placeholder="0123456789"
+                                    placeholder="Votre Numero "
                                 />
                             </div>
                         </div>
 
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label>Grade</label>
-                                <select 
-                                    value={formData.grade}
-                                    onChange={(e) => setFormData({...formData, grade: e.target.value})}
-                                    required
-                                >
-                                    <option value="">Sélectionner un grade</option>
-                                    <option value="Professeur">Professeur</option>
-                                    <option value="Maître de conférences">Maître de conférences</option>
-                                    <option value="Assistant">Assistant</option>
-                                </select>
-                            </div>
-
-                            <div className="form-group">
-                                <label>Spécialité</label>
-                                <input 
-                                    type="text" 
-                                    value={formData.specialite}
-                                    onChange={(e) => setFormData({...formData, specialite: e.target.value})}
-                                    placeholder="Entrez la spécialité"
-                                />
-                            </div>
-                        </div>
+                        
                     </div>
 
                     <div className="form-footer">

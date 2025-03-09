@@ -1,5 +1,5 @@
 /* Styles généraux */
-.enseignants-page {
+/* .enseignants-page {
     padding: 20px;
     background-color: #f5f7fa;
 }
@@ -185,4 +185,418 @@ th, td {
         width: 95%;
         margin: 10px;
     }
+} */
+/* Variables pour les couleurs et les transitions */
+:root {
+  --primary-color: #4caf50;
+  --primary-hover: #45a049;
+  --danger-color: #f44336;
+  --danger-hover: #da190b;
+  --edit-color: #2196f3;
+  --background-light: #f8f9fa;
+  --border-color: #ddd;
+  --text-color: #333;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+}
+
+/* Container principal avec animation de fade-in */
+.enseignants-container {
+  padding: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* En-tête avec effet de profondeur */
+.enseignants-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: all var(--transition-speed) ease;
+}
+
+.enseignants-header h1 {
+  color: var(--text-color);
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Actions header avec espacement amélioré */
+.header-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Barre de recherche améliorée */
+.search-box {
+  position: relative;
+  width: 300px;
+  transition: all var(--transition-speed) ease;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 40px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all var(--transition-speed) ease;
+  background-color: white;
+}
+
+.search-box input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  transition: color var(--transition-speed) ease;
+}
+
+.search-box input:focus + .search-icon {
+  color: var(--primary-color);
+}
+
+/* Bouton d'ajout avec animation */
+.add-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all var(--transition-speed) ease;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.add-btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.add-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+/* Conteneur de table avec animation */
+.enseignants-table-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  overflow: hidden;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Style de table amélioré */
+.enseignants-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.enseignants-table th,
+.enseignants-table td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color var(--transition-speed) ease;
+}
+
+.enseignants-table th {
+  background-color: var(--background-light);
+  font-weight: 600;
+  color: var(--text-color);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.enseignants-table tr {
+  transition: all var(--transition-speed) ease;
+}
+
+.enseignants-table tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Cellules d'actions avec animations */
+.actions-cell {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all var(--transition-speed) ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn.edit {
+  color: var(--edit-color);
+}
+
+.action-btn.delete {
+  color: var(--danger-color);
+}
+
+.action-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Modal avec animation */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background-color: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  animation: scaleIn 0.3s ease-out;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content {
+  padding: 24px;
+}
+
+.modal h2 {
+  margin-bottom: 24px;
+  color: var(--text-color);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Groupes de formulaire améliorés */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all var(--transition-speed) ease;
+}
+
+.form-group input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  outline: none;
+}
+
+.form-group input:disabled {
+  background-color: var(--background-light);
+  cursor: not-allowed;
+}
+
+/* Actions du modal */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all var(--transition-speed) ease;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.cancel-btn {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background-color: var(--danger-hover);
+  transform: translateY(-1px);
+}
+
+.submit-btn:disabled,
+.cancel-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* États de chargement et d'erreur */
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+  color: var(--text-color);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: var(--danger-color);
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 8px;
+  border: 1px solid #ef9a9a;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .enseignants-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .enseignants-table {
+    font-size: 14px;
+  }
+
+  .modal {
+    width: 95%;
+    margin: 10px;
+  }
 }

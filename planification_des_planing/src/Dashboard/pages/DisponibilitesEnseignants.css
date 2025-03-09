@@ -1,0 +1,416 @@
+/* Variables pour les couleurs et les transitions */
+:root {
+  --primary-color: #4caf50;
+  --primary-hover: #45a049;
+  --danger-color: #f44336;
+  --danger-hover: #da190b;
+  --edit-color: #2196f3;
+  --background-light: #f8f9fa;
+  --border-color: #ddd;
+  --text-color: #333;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+}
+
+/* Container principal avec animation de fade-in */
+.disponibilites-container {
+  padding: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* En-tête avec effet de profondeur */
+.disponibilites-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: all var(--transition-speed) ease;
+}
+
+.disponibilites-header h1 {
+  color: var(--text-color);
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Actions header avec espacement amélioré */
+.header-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Barre de recherche améliorée */
+.search-box {
+  position: relative;
+  width: 300px;
+  transition: all var(--transition-speed) ease;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 40px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all var(--transition-speed) ease;
+  background-color: white;
+}
+
+.search-box input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  transition: color var(--transition-speed) ease;
+}
+
+.search-box input:focus + .search-icon {
+  color: var(--primary-color);
+}
+
+/* Sélecteur de semaine */
+.week-selector input {
+  padding: 12px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all var(--transition-speed) ease;
+  background-color: white;
+}
+
+.week-selector input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  outline: none;
+}
+
+/* Contenu principal */
+.disponibilites-content {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Liste des enseignants */
+.enseignants-list {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  overflow: hidden;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.enseignant-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.enseignant-item:hover {
+  background-color: var(--background-light);
+}
+
+.enseignant-item.selected {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Conteneur du calendrier */
+.calendar-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  padding: 20px;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendar-header h2 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.calendar-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Table du calendrier */
+.calendar-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+}
+
+.calendar-table th,
+.calendar-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+}
+
+.calendar-table th {
+  background-color: var(--background-light);
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.time-slot {
+  font-weight: 500;
+  background-color: var(--background-light);
+}
+
+.calendar-cell {
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  width: 80px;
+  height: 80px;
+  font-size: 24px;
+  color: var(--text-color);
+}
+
+.calendar-cell:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.calendar-cell.available {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: var(--primary-color);
+}
+
+/* Boutons d'action */
+.action-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all var(--transition-speed) ease;
+  background-color: var(--background-light);
+  color: var(--text-color);
+}
+
+.action-btn:hover {
+  background-color: var(--border-color);
+  transform: translateY(-1px);
+}
+
+.action-btn.save {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.action-btn.save:hover {
+  background-color: var(--primary-hover);
+}
+
+/* États de chargement et d'erreur */
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+  color: var(--text-color);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: var(--danger-color);
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 8px;
+  border: 1px solid #ef9a9a;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .disponibilites-content {
+    grid-template-columns: 1fr;
+  }
+
+  .enseignants-list {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .disponibilites-container {
+    padding: 16px;
+  }
+
+  .disponibilites-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .search-box,
+  .week-selector input {
+    width: 100%;
+  }
+
+  .calendar-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .calendar-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .calendar-table {
+    font-size: 14px;
+  }
+
+  .calendar-cell {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .disponibilites-container {
+    background-color: #1a1a1a;
+  }
+
+  .disponibilites-header,
+  .calendar-container,
+  .enseignants-list {
+    background: #2d2d2d;
+  }
+
+  .disponibilites-header h1,
+  .calendar-header h2 {
+    color: #fff;
+  }
+
+  .search-box input,
+  .week-selector input {
+    background-color: #333;
+    border-color: #404040;
+    color: #fff;
+  }
+
+  .calendar-table th,
+  .time-slot {
+    background-color: #333;
+    color: #fff;
+  }
+
+  .calendar-cell {
+    color: #fff;
+    border-color: #404040;
+  }
+
+  .calendar-cell.available {
+    background-color: rgba(76, 175, 80, 0.3);
+  }
+
+  .action-btn {
+    background-color: #333;
+    color: #fff;
+  }
+
+  .action-btn:hover {
+    background-color: #404040;
+  }
+
+  .enseignant-item {
+    color: #fff;
+    border-color: #404040;
+  }
+
+  .enseignant-item:hover {
+    background-color: #333;
+  }
+}
