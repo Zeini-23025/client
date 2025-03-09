@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Routing from './routing'
+import Routing from './Routing';
 import './App.css'
 
 function App() {
