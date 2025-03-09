@@ -131,7 +131,7 @@
   justify-content: center;
   align-items: center;
   z-index: 99999;
-  backdrop-filter: blur(8px);
+  /* backdrop-filter: blur(8px); */
 }
 
 .modal {

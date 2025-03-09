@@ -1,0 +1,193 @@
+.emplois-container {
+    padding: 20px;
+    background-color: #f5f7fa;
+}
+
+/* Contrôles en haut */
+.controls {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.groupe-selector select {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 150px;
+}
+
+.generate-btn, .export-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.generate-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.export-btn {
+    background-color: #2196F3;
+    color: white;
+}
+
+.generate-btn:hover, .export-btn:hover {
+    opacity: 0.9;
+}
+
+/* Container de l'emploi du temps */
+.timetable-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.timetable-container h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.group-info {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+/* Table de l'emploi du temps */
+.timetable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e0e0e0;
+}
+
+.timetable th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: 600;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+.timetable td {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    vertical-align: top;
+}
+
+.horaire {
+    background-color: #f8f9fa;
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+    width: 120px;
+}
+
+.cours-cell {
+    min-height: 80px;
+    background-color: #fff;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Styles pour les différents types de cours */
+.cours-cell .cm {
+    background-color: #e3f2fd;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.cours-cell .tp {
+    background-color: #f1f8e9;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.cours-cell .td {
+    background-color: #fff3e0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+/* Ligne de pause */
+.pause-row {
+    background-color: #fff3e0;
+    text-align: center;
+    font-weight: 500;
+    color: #f57c00;
+}
+
+/* Légende */
+.legend {
+    margin-top: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cm-indicator, .tp-indicator, .td-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.cm-indicator {
+    background-color: #e3f2fd;
+}
+
+.tp-indicator {
+    background-color: #f1f8e9;
+}
+
+.td-indicator {
+    background-color: #fff3e0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .timetable {
+        font-size: 0.8rem;
+    }
+    
+    .horaire {
+        width: 80px;
+    }
+    
+    .cours-cell {
+        padding: 8px;
+    }
+}
