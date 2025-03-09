@@ -26,8 +26,31 @@ const EmploiTemps = () => {
     matiere: ''
   });
 
-  const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-  const creneaux = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
+  // Structure des données correspondant au modèle Python
+  const groupesData = {
+    '1': ['G1', 'G2', 'TP1', 'TP2', 'CNM', 'RSS', 'DSI_CM', 'DIS_TP1', 'DSI_TP2'],
+    '2': ['G2', 'TP3', 'TP4', 'CNM', 'RSS', 'DSI_CM', 'DIS_TP1', 'DSI_TP2']
+  };
+
+  // Créneaux horaires
+  const creneaux = [
+    ['P1', '1'],
+    ['P2', '2'],
+    ['P3', '3'],
+    ['P4', '4'],
+    ['P5', '5'],
+    ['P6', '6']
+  ];
+
+  // Jours de la semaine
+  const jours = [
+    ['B', 'Lundi'],
+    ['C', 'Mardi'],
+    ['D', 'Mercredi'],
+    ['E', 'Jeudi'],
+    ['F', 'Vendredi'],
+    ['G', 'Samedi']
+  ];
 
   useEffect(() => {
     fetchInitialData();
@@ -118,20 +141,29 @@ const EmploiTemps = () => {
     window.print();
   };
 
-  const getSeance = (jour, creneau) => {
-    return emploiTemps.find(seance => 
-      seance.jour === jour && 
-      seance.creneau === creneau
+  // Fonction pour obtenir le contenu d'une cellule avec le style approprié
+  const getCellContent = (jour, creneau) => {
+    const seance = emploiTemps.find(s => 
+      s.jour === jour && 
+      s.creneau === creneau
     );
-  };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('fr-FR', { 
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
+    if (!seance) return null;
+
+    return (
+      <div className={`cours-content ${seance.type_cours.toLowerCase()}`}>
+        <div className="cours-header">
+          <span className={`cours-type ${seance.type_cours.toLowerCase()}`}>
+            {seance.type_cours}
+          </span>
+          <span className="cours-matiere">{seance.matiere.nom}</span>
+        </div>
+        <div className="cours-details">
+          <span className="cours-enseignant">{seance.enseignant.nom}</span>
+          <span className="cours-groupe">{seance.groupe.nom}</span>
+        </div>
+      </div>
+    );
   };
 
   if (loading && !emploiTemps.length) {
@@ -232,61 +264,45 @@ const EmploiTemps = () => {
         </div>
       </div>
 
-      {selectedWeek ? (
-        <div className="emploi-temps-grid-container">
-          <div className="semaine-info">
-            Semaine du {formatDate(selectedWeek)}
-          </div>
-          <div className="emploi-temps-grid">
-            <div className="grid-header">
-              <div className="grid-cell header"></div>
-              {creneaux.map(creneau => (
-                <div key={creneau} className="grid-cell header">
-                  {creneau}
-                </div>
+      <div className="timetable-container">
+        <table className="timetable">
+          <thead>
+            <tr>
+              <th>Créneaux</th>
+              {jours.map(([_, jour]) => (
+                <th key={jour}>{jour}</th>
               ))}
-            </div>
-            {jours.map(jour => (
-              <div key={jour} className="grid-row">
-                <div className="grid-cell jour">
-                  {jour}
-                </div>
-                {creneaux.map(creneau => {
-                  const seance = getSeance(jour, creneau);
-                  return (
-                    <div 
-                      key={`${jour}-${creneau}`} 
-                      className={`grid-cell seance ${seance ? 'has-seance' : ''}`}
-                    >
-                      {seance && (
-                        <div className="seance-content">
-                          <div className="seance-matiere">
-                            {seance.matiere.nom}
-                          </div>
-                          <div className="seance-enseignant">
-                            {seance.enseignant.nom}
-                          </div>
-                          <div className="seance-groupe">
-                            {seance.groupe.nom}
-                          </div>
-                          <div className="seance-type">
-                            {seance.type_cours}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+            </tr>
+          </thead>
+          <tbody>
+            {creneaux.map(([periode, index]) => (
+              <tr key={index}>
+                <td className="periode">{periode}</td>
+                {jours.map(([col, _]) => (
+                  <td key={`${col}${index}`} className="cours-cell">
+                    {getCellContent(col, index)}
+                  </td>
+                ))}
+              </tr>
             ))}
-          </div>
+          </tbody>
+        </table>
+      </div>
+
+      <div className="legend">
+        <div className="legend-item">
+          <span className="cours-type cm">CM</span>
+          <span className="legend-text">Cours Magistral</span>
         </div>
-      ) : (
-        <div className="no-week-selected">
-          <FontAwesomeIcon icon={faCalendarWeek} className="calendar-icon" />
-          <p>Veuillez sélectionner une semaine pour afficher l'emploi du temps</p>
+        <div className="legend-item">
+          <span className="cours-type tp">TP</span>
+          <span className="legend-text">Travaux Pratiques</span>
         </div>
-      )}
+        <div className="legend-item">
+          <span className="cours-type td">TD</span>
+          <span className="legend-text">Travaux Dirigés</span>
+        </div>
+      </div>
     </div>
   );
 };

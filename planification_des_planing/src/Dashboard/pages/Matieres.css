@@ -231,6 +231,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 99999;
+  /* backdrop-filter: blur(8px); */
+
   z-index: 1000;
   animation: fadeIn 0.3s ease-out;
   backdrop-filter: blur(4px);

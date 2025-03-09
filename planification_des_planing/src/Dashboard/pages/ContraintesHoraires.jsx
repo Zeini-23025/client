@@ -10,8 +10,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { apiServices } from '../../api';
 import './ContraintesHoraires.css';
+import { useNavigate } from 'react-router-dom';
 
 const ContraintesHoraires = () => {
+  const navigate = useNavigate();
   const [contraintes, setContraintes] = useState([]);
   const [enseignants, setEnseignants] = useState([]);
   const [groupes, setGroupes] = useState([]);
@@ -127,18 +129,7 @@ const ContraintesHoraires = () => {
   };
 
   const handleEdit = (contrainte) => {
-    setCurrentContrainte(contrainte);
-    setFormData({
-      type_contrainte: contrainte.type_contrainte,
-      enseignant_id: contrainte.enseignant?.id || '',
-      groupe_id: contrainte.groupe?.id || '',
-      jour: contrainte.jour,
-      creneau: contrainte.creneau,
-      type_indisponibilite: contrainte.type_indisponibilite,
-      date_specifique: contrainte.date_specifique || '',
-      motif: contrainte.motif || ''
-    });
-    setShowModal(true);
+    navigate(`/contraintes/edit/${contrainte.id}`);
   };
 
   const handleDelete = async (id) => {
@@ -229,7 +220,10 @@ const ContraintesHoraires = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <button className="add-btn" onClick={() => setShowModal(true)}>
+          <button 
+            className="add-btn" 
+            onClick={() => navigate('/contraintes/add')}
+          >
             <FontAwesomeIcon icon={faPlus} /> Ajouter une contrainte
           </button>
         </div>
@@ -291,149 +285,6 @@ const ContraintesHoraires = () => {
           </div>
         ))}
       </div>
-
-      {showModal && (
-        <div className="modal-overlay" onClick={() => !loading && setShowModal(false)}>
-          <div className="modal">
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-              <h2>{currentContrainte ? 'Modifier la contrainte' : 'Ajouter une contrainte'}</h2>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label>Type de contrainte</label>
-                  <select
-                    name="type_contrainte"
-                    value={formData.type_contrainte}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    <option value="enseignant">Enseignant</option>
-                    <option value="groupe">Groupe</option>
-                  </select>
-                </div>
-                {formData.type_contrainte === 'enseignant' ? (
-                  <div className="form-group">
-                    <label>Enseignant</label>
-                    <select
-                      name="enseignant_id"
-                      value={formData.enseignant_id}
-                      onChange={handleInputChange}
-                      required
-                      disabled={loading}
-                    >
-                      <option value="">Sélectionner un enseignant</option>
-                      {enseignants.map(enseignant => (
-                        <option key={enseignant.id} value={enseignant.id}>
-                          {enseignant.nom}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                ) : (
-                  <div className="form-group">
-                    <label>Groupe</label>
-                    <select
-                      name="groupe_id"
-                      value={formData.groupe_id}
-                      onChange={handleInputChange}
-                      required
-                      disabled={loading}
-                    >
-                      <option value="">Sélectionner un groupe</option>
-                      {groupes.map(groupe => (
-                        <option key={groupe.id} value={groupe.id}>
-                          {groupe.nom}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-                <div className="form-group">
-                  <label>Type d'indisponibilité</label>
-                  <select
-                    name="type_indisponibilite"
-                    value={formData.type_indisponibilite}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    {types_indisponibilite.map(type => (
-                      <option key={type.value} value={type.value}>
-                        {type.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                {formData.type_indisponibilite === 'ponctuelle' && (
-                  <div className="form-group">
-                    <label>Date spécifique</label>
-                    <input
-                      type="date"
-                      name="date_specifique"
-                      value={formData.date_specifique}
-                      onChange={handleInputChange}
-                      required
-                      disabled={loading}
-                    />
-                  </div>
-                )}
-                <div className="form-group">
-                  <label>Jour</label>
-                  <select
-                    name="jour"
-                    value={formData.jour}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    {jours.map(jour => (
-                      <option key={jour} value={jour}>{jour}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Créneau</label>
-                  <select
-                    name="creneau"
-                    value={formData.creneau}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    {creneaux.map(creneau => (
-                      <option key={creneau} value={creneau}>{creneau}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Motif</label>
-                  <textarea
-                    name="motif"
-                    value={formData.motif}
-                    onChange={handleInputChange}
-                    placeholder="Motif de l'indisponibilité..."
-                    rows="3"
-                    disabled={loading}
-                  />
-                </div>
-                <div className="modal-actions">
-                  <button type="submit" className="submit-btn" disabled={loading}>
-                    {loading ? 'Chargement...' : currentContrainte ? 'Modifier' : 'Ajouter'}
-                  </button>
-                  <button 
-                    type="button" 
-                    className="cancel-btn" 
-                    onClick={resetForm}
-                    disabled={loading}
-                  >
-                    Annuler
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

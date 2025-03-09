@@ -3,24 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit, faTrash, faSearch, faBook } from '@fortawesome/free-solid-svg-icons';
 import { apiServices } from '../../api';
 import './Groupes.css';
+import { useNavigate } from 'react-router-dom';
 
 const Groupes = () => {
+  const navigate = useNavigate();
   const [groupes, setGroupes] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [currentGroupe, setCurrentGroupe] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showMatieres, setShowMatieres] = useState(false);
   const [selectedGroupeMatieres, setSelectedGroupeMatieres] = useState([]);
-
-  const initialFormState = {
-    nom: '',
-    semestre: 1,
-    parent: null
-  };
-
-  const [formData, setFormData] = useState(initialFormState);
 
   useEffect(() => {
     fetchGroupes();
@@ -40,48 +32,8 @@ const Groupes = () => {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: name === 'semestre' ? parseInt(value) : value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      if (currentGroupe) {
-        await apiServices.groupes.update(currentGroupe.id, formData);
-      } else {
-        await apiServices.groupes.create(formData);
-      }
-      await fetchGroupes();
-      resetForm();
-      setError(null);
-    } catch (err) {
-      setError(currentGroupe ? 'Erreur lors de la modification' : 'Erreur lors de la création');
-      console.error('Erreur:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const resetForm = () => {
-    setFormData(initialFormState);
-    setCurrentGroupe(null);
-    setShowModal(false);
-  };
-
   const handleEdit = (groupe) => {
-    setCurrentGroupe(groupe);
-    setFormData({
-      nom: groupe.nom,
-      semestre: groupe.semestre,
-      parent: groupe.parent
-    });
-    setShowModal(true);
+    navigate(`/groupes/edit/${groupe.id}`);
   };
 
   const handleDelete = async (id) => {
@@ -138,7 +90,10 @@ const Groupes = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <button className="add-btn" onClick={() => setShowModal(true)}>
+          <button 
+            className="add-btn" 
+            onClick={() => navigate('/groupes/add')}
+          >
             <FontAwesomeIcon icon={faPlus} /> Ajouter un groupe
           </button>
         </div>
@@ -188,74 +143,6 @@ const Groupes = () => {
           </tbody>
         </table>
       </div>
-
-      {showModal && (
-        <div className="modal-overlay" onClick={() => !loading && setShowModal(false)}>
-          <div className="modal">
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-              <h2>{currentGroupe ? 'Modifier le groupe' : 'Ajouter un groupe'}</h2>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label>Nom</label>
-                  <input
-                    type="text"
-                    name="nom"
-                    value={formData.nom}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Semestre</label>
-                  <select
-                    name="semestre"
-                    value={formData.semestre}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    {[1, 2, 3, 4, 5, 6].map(num => (
-                      <option key={num} value={num}>Semestre {num}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Groupe Parent</label>
-                  <select
-                    name="parent"
-                    value={formData.parent || ''}
-                    onChange={handleInputChange}
-                    disabled={loading}
-                  >
-                    <option value="">Aucun</option>
-                    {groupes
-                      .filter(g => g.id !== currentGroupe?.id)
-                      .map(groupe => (
-                        <option key={groupe.id} value={groupe.id}>
-                          {groupe.nom}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-                <div className="modal-actions">
-                  <button type="submit" className="submit-btn" disabled={loading}>
-                    {loading ? 'Chargement...' : currentGroupe ? 'Modifier' : 'Ajouter'}
-                  </button>
-                  <button 
-                    type="button" 
-                    className="cancel-btn" 
-                    onClick={resetForm}
-                    disabled={loading}
-                  >
-                    Annuler
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
 
       {showMatieres && (
         <div className="modal-overlay" onClick={() => setShowMatieres(false)}>

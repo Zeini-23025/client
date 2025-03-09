@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { apiServices } from '../../api';
 import './Matieres.css';
+import { useNavigate } from 'react-router-dom';
 
 const Matieres = () => {
+  const navigate = useNavigate();
   const [matieres, setMatieres] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentMatiere, setCurrentMatiere] = useState(null);
@@ -92,15 +94,7 @@ const Matieres = () => {
   };
 
   const handleEdit = (matiere) => {
-    setCurrentMatiere(matiere);
-    setFormData({
-      code: matiere.code,
-      nom: matiere.nom,
-      credits: parseInt(matiere.credits),
-      semestre: parseInt(matiere.semestre),
-      filiere: matiere.filiere
-    });
-    setShowModal(true);
+    navigate(`/matieres/edit/${matiere.id}`);
   };
 
   const handleDelete = async (id) => {
@@ -174,7 +168,10 @@ const Matieres = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <button className="add-btn" onClick={() => setShowModal(true)}>
+          <button 
+            className="add-btn" 
+            onClick={() => navigate('/matieres/add')}
+          >
             <FontAwesomeIcon icon={faPlus} /> Ajouter une matière
           </button>
         </div>
@@ -221,97 +218,6 @@ const Matieres = () => {
           </tbody>
         </table>
       </div>
-
-      {showModal && (
-        <div className="modal-overlay" onClick={() => !loading && setShowModal(false)}>
-          <div className="modal">
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-              <h2>{currentMatiere ? 'Modifier la matière' : 'Ajouter une matière'}</h2>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label>Code</label>
-                  <input
-                    type="text"
-                    name="code"
-                    value={formData.code}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Nom</label>
-                  <input
-                    type="text"
-                    name="nom"
-                    value={formData.nom}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Crédits</label>
-                  <input
-                    type="number"
-                    name="credits"
-                    value={formData.credits}
-                    onChange={handleInputChange}
-                    required
-                    min="0"
-                    disabled={loading}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Semestre</label>
-                  <select
-                    name="semestre"
-                    value={formData.semestre}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    {semestres.map(sem => (
-                      <option key={sem} value={sem}>
-                        Semestre {sem}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Filière</label>
-                  <select
-                    name="filiere"
-                    value={formData.filiere}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    {filieres.map(fil => (
-                      <option key={fil} value={fil}>
-                        {fil}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="modal-actions">
-                  <button type="submit" className="submit-btn" disabled={loading}>
-                    {loading ? 'Chargement...' : currentMatiere ? 'Modifier' : 'Ajouter'}
-                  </button>
-                  <button 
-                    type="button" 
-                    className="cancel-btn" 
-                    onClick={resetForm}
-                    disabled={loading}
-                  >
-                    Annuler
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

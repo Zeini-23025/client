@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
 import { apiServices } from '../../api';
 import './Enseignants.css';
 
 const Enseignants = () => {
+  const navigate = useNavigate();
   const [enseignants, setEnseignants] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentEnseignant, setCurrentEnseignant] = useState(null);
@@ -16,7 +18,8 @@ const Enseignants = () => {
   const initialFormState = {
     nom: '',
     identifiant: '',
-    email: ''
+    email: '',
+    telephone: '' // Ajoutez ce champ
   };
 
   const [formData, setFormData] = useState(initialFormState);
@@ -48,7 +51,7 @@ const Enseignants = () => {
 
   const validateForm = () => {
     const errors = {};
-    
+
     if (!formData.nom.trim()) {
       errors.nom = 'Le nom est requis';
     }
@@ -61,6 +64,12 @@ const Enseignants = () => {
       errors.email = 'L\'email est requis';
     } else if (!validateEmail(formData.email)) {
       errors.email = 'Format d\'email invalide';
+    }
+
+    if (!formData.telephone.trim()) {
+      errors.telephone = 'Le téléphone est requis';
+    } else if (!/^\d{10}$/.test(formData.telephone)) { // Valider un numéro de 10 chiffres
+      errors.telephone = 'Format de téléphone invalide (10 chiffres requis)';
     }
 
     setFormErrors(errors);
@@ -84,7 +93,7 @@ const Enseignants = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -94,7 +103,8 @@ const Enseignants = () => {
       const dataToSend = {
         nom: formData.nom,
         identifiant: formData.identifiant,
-        email: formData.email
+        email: formData.email,
+        telephone: formData.telephone // Ajoutez ce champ
       };
 
       if (currentEnseignant) {
@@ -127,7 +137,8 @@ const Enseignants = () => {
     setFormData({
       nom: enseignant.nom,
       identifiant: enseignant.identifiant,
-      email: enseignant.email
+      email: enseignant.email,
+      telephone: enseignant.telephone // Ajoutez ce champ
     });
     setShowModal(true);
   };
@@ -151,7 +162,8 @@ const Enseignants = () => {
   const filteredEnseignants = enseignants.filter(enseignant =>
     enseignant.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
     enseignant.identifiant.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    enseignant.email.toLowerCase().includes(searchTerm.toLowerCase())
+    enseignant.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    enseignant.telephone.toLowerCase().includes(searchTerm.toLowerCase()) // Ajoutez ce champ
   );
 
   if (loading && !enseignants.length) {
@@ -174,7 +186,7 @@ const Enseignants = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <button className="add-btn" onClick={() => setShowModal(true)}>
+          <button className="add-btn" onClick={() => navigate("/enseignants/ajouter")}>
             <FontAwesomeIcon icon={faPlus} /> Ajouter un enseignant
           </button>
         </div>
@@ -187,6 +199,7 @@ const Enseignants = () => {
               <th>Identifiant</th>
               <th>Nom</th>
               <th>Email</th>
+              <th>Téléphone</th> {/* Nouvelle colonne */}
               <th>Actions</th>
             </tr>
           </thead>
@@ -196,6 +209,7 @@ const Enseignants = () => {
                 <td>{enseignant.identifiant}</td>
                 <td>{enseignant.nom}</td>
                 <td>{enseignant.email}</td>
+                <td>{enseignant.telephone}</td> {/* Nouvelle colonne */}
                 <td className="actions-cell">
                   <button 
                     className="action-btn edit"
@@ -266,6 +280,20 @@ const Enseignants = () => {
                     <span className="error-text">{formErrors.email}</span>
                   )}
                 </div>
+                <div className="form-group">
+                  <label>Téléphone</label>
+                  <input
+                    type="text"
+                    name="telephone"
+                    value={formData.telephone}
+                    onChange={handleInputChange}
+                    required
+                    disabled={loading}
+                  />
+                  {formErrors.telephone && (
+                    <span className="error-text">{formErrors.telephone}</span>
+                  )}
+                </div>
                 <div className="modal-actions">
                   <button type="submit" className="submit-btn" disabled={loading}>
                     {loading ? 'Chargement...' : currentEnseignant ? 'Modifier' : 'Ajouter'}
@@ -288,4 +316,4 @@ const Enseignants = () => {
   );
 };
 
-export default Enseignants; 
+export default Enseignants;

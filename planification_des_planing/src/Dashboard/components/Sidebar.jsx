@@ -12,6 +12,10 @@ import {
   faListCheck,
   faTableCells,
   faBars,
+  faCode,
+  faMoneyBillTransfer,
+  
+
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
@@ -36,6 +40,13 @@ function Sidebar({ isOpen, setIsOpen }) {
       text: 'Gestion des matières',
       path: '/dashboard/matieres',
     },
+    
+    // { 
+    //   icon: faCalendarAlt,
+    //   text: 'Gestion des enseignants',
+    //   path: '/dashboard/enseignants',
+    // },  
+    // { icon: faCog, text: 'Setting', path: '/dashboard/settings' },
     {
       icon: faChalkboardTeacher,
       text: 'Gestion des enseignants',

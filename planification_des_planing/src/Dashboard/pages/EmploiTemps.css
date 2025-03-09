@@ -358,3 +358,138 @@
     color: #ccc;
   }
 }
+
+.cours-cell {
+  padding: 8px;
+  border: 1px solid #ddd;
+  vertical-align: top;
+  min-height: 80px;
+  position: relative;
+}
+
+.cours-content {
+  padding: 8px;
+  border-radius: 4px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cours-content.cm {
+  background-color: #e3f2fd;
+  border-left: 4px solid #1976d2;
+}
+
+.cours-content.tp {
+  background-color: #f3e5f5;
+  border-left: 4px solid #7b1fa2;
+}
+
+.cours-content.td {
+  background-color: #e8f5e9;
+  border-left: 4px solid #388e3c;
+}
+
+.cours-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cours-type {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: white;
+}
+
+.cours-type.cm {
+  background-color: #1976d2;
+}
+
+.cours-type.tp {
+  background-color: #7b1fa2;
+}
+
+.cours-type.td {
+  background-color: #388e3c;
+}
+
+.cours-matiere {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.cours-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.cours-enseignant,
+.cours-groupe {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Légende */
+.legend {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  padding: 10px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-text {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Hover effects */
+.cours-content:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cours-content {
+    padding: 4px;
+  }
+
+  .cours-type {
+    font-size: 10px;
+    padding: 1px 4px;
+  }
+
+  .cours-matiere {
+    font-size: 12px;
+  }
+
+  .cours-details {
+    font-size: 10px;
+  }
+
+  .legend {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+

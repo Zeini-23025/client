@@ -9,14 +9,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { apiServices } from '../../api';
 import './AffectationsEnseignant.css';
+import { useNavigate } from 'react-router-dom';
 
 const AffectationsEnseignant = () => {
+  const navigate = useNavigate();
   const [affectations, setAffectations] = useState([]);
   const [enseignants, setEnseignants] = useState([]);
   const [matieres, setMatieres] = useState([]);
   const [groupes, setGroupes] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [currentAffectation, setCurrentAffectation] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -136,16 +136,7 @@ const AffectationsEnseignant = () => {
   };
 
   const handleEdit = (affectation) => {
-    setCurrentAffectation(affectation);
-    setFormData({
-      enseignant: affectation.enseignant.id,
-      matiere: affectation.matiere.id,
-      groupe: affectation.groupe.id,
-      type_cours: affectation.type_cours,
-      jour: affectation.jour,
-      creneau: affectation.creneau
-    });
-    setShowModal(true);
+    navigate(`/affectations/edit/${affectation.id}`);
   };
 
   const handleDelete = async (id) => {
@@ -246,7 +237,10 @@ const AffectationsEnseignant = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <button className="add-btn" onClick={() => setShowModal(true)}>
+          <button 
+            className="add-btn" 
+            onClick={() => navigate('/affectations/add')}
+          >
             <FontAwesomeIcon icon={faPlus} /> Ajouter une affectation
           </button>
         </div>
@@ -295,126 +289,6 @@ const AffectationsEnseignant = () => {
           </tbody>
         </table>
       </div>
-
-      {showModal && (
-        <div className="modal-overlay" onClick={() => !loading && setShowModal(false)}>
-          <div className="modal">
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-              <h2>{currentAffectation ? 'Modifier l\'affectation' : 'Ajouter une affectation'}</h2>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label>Enseignant</label>
-                  <select
-                    name="enseignant"
-                    value={formData.enseignant}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    <option value="">Sélectionner un enseignant</option>
-                    {enseignants.map(enseignant => (
-                      <option key={enseignant.id} value={enseignant.id}>
-                        {enseignant.nom}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Matière</label>
-                  <select
-                    name="matiere"
-                    value={formData.matiere}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    <option value="">Sélectionner une matière</option>
-                    {matieres.map(matiere => (
-                      <option key={matiere.id} value={matiere.id}>
-                        {matiere.nom}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Groupe</label>
-                  <select
-                    name="groupe"
-                    value={formData.groupe}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    <option value="">Sélectionner un groupe</option>
-                    {groupes.map(groupe => (
-                      <option key={groupe.id} value={groupe.id}>
-                        {groupe.nom}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Type de cours</label>
-                  <select
-                    name="type_cours"
-                    value={formData.type_cours}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    {types_cours.map(type => (
-                      <option key={type.value} value={type.value}>
-                        {type.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Jour</label>
-                  <select
-                    name="jour"
-                    value={formData.jour}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    {jours.map(jour => (
-                      <option key={jour} value={jour}>{jour}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Créneau</label>
-                  <select
-                    name="creneau"
-                    value={formData.creneau}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  >
-                    {creneaux.map(creneau => (
-                      <option key={creneau} value={creneau}>{creneau}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="modal-actions">
-                  <button type="submit" className="submit-btn" disabled={loading}>
-                    {loading ? 'Chargement...' : currentAffectation ? 'Modifier' : 'Ajouter'}
-                  </button>
-                  <button 
-                    type="button" 
-                    className="cancel-btn" 
-                    onClick={resetForm}
-                    disabled={loading}
-                  >
-                    Annuler
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
