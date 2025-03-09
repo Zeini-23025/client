@@ -7,11 +7,20 @@ import './ChargesHebdo.css';
 const ChargesHebdo = () => {
   const [matieres, setMatieres] = useState([]);
   const [selectedWeek, setSelectedWeek] = useState(getCurrentWeek());
-  const [charges, setCharges] = useState({});
+  const [charges, setCharges] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [disponibiliteChanges, setDisponibiliteChanges] = useState([]);
+
+  useEffect(() => {
+    fetchMatieres();
+  }, []);
+
+  useEffect(() => {
+    if (selectedWeek) {
+      fetchCharges();
+    }
+  }, [selectedWeek]);
 
   function getCurrentWeek() {
     const now = new Date();
@@ -23,16 +32,10 @@ const ChargesHebdo = () => {
     };
   }
 
-  useEffect(() => {
-    fetchMatieres();
-  }, []);
-
-  useEffect(() => {
-    if (selectedWeek) {
-      fetchCharges();
-      fetchDisponibiliteChanges();
-    }
-  }, [selectedWeek]);
+  function getWeekDate(year, week) {
+    const date = new Date(year, 0, 1 + (week - 1) * 7);
+    return date.toISOString().split('T')[0];
+  }
 
   const fetchMatieres = async () => {
     try {
@@ -51,11 +54,12 @@ const ChargesHebdo = () => {
   const fetchCharges = async () => {
     try {
       setLoading(true);
-      const response = await apiServices.charges.getByWeek(
-        selectedWeek.year,
-        selectedWeek.week
+      const weekDate = getWeekDate(selectedWeek.year, selectedWeek.week);
+      const response = await apiServices.chargesHebdo.list();
+      const filteredCharges = response.data.filter(charge => 
+        charge.semaine === weekDate
       );
-      setCharges(response.data || {});
+      setCharges(filteredCharges);
       setError(null);
     } catch (err) {
       setError('Erreur lors du chargement des charges');
@@ -65,35 +69,45 @@ const ChargesHebdo = () => {
     }
   };
 
-  const fetchDisponibiliteChanges = async () => {
+  const handleChargeChange = async (matiereId, type, value) => {
     try {
-      const response = await apiServices.disponibilites.getChangesForWeek(
-        selectedWeek.year,
-        selectedWeek.week
-      );
-      setDisponibiliteChanges(response.data || []);
-    } catch (err) {
-      console.error('Erreur lors du chargement des changements de disponibilité:', err);
-    }
-  };
+      const weekDate = getWeekDate(selectedWeek.year, selectedWeek.week);
+      const existingCharge = charges.find(c => c.matiere === matiereId);
+      const newValue = parseInt(value) || 0;
 
-  const handleChargeChange = (matiereId, type, value) => {
-    setCharges(prev => ({
-      ...prev,
-      [matiereId]: {
-        ...prev[matiereId],
-        [type]: parseInt(value) || 0
+      if (existingCharge) {
+        const updatedCharge = {
+          ...existingCharge,
+          [`heures_${type.toLowerCase()}`]: newValue
+        };
+        const response = await apiServices.chargesHebdo.update(existingCharge.id, updatedCharge);
+        setCharges(prev => prev.map(c => c.id === existingCharge.id ? response.data : c));
+      } else {
+        const newCharge = {
+          matiere: matiereId,
+          semaine: weekDate,
+          heures_cm: type === 'cm' ? newValue : 0,
+          heures_td: type === 'td' ? newValue : 0,
+          heures_tp: type === 'tp' ? newValue : 0
+        };
+        const response = await apiServices.chargesHebdo.create(newCharge);
+        setCharges(prev => [...prev, response.data]);
       }
-    }));
+      setError(null);
+    } catch (err) {
+      setError('Erreur lors de la modification des charges');
+      console.error('Erreur:', err);
+    }
   };
 
   const copyFromPreviousWeek = async () => {
     try {
       setLoading(true);
-      const prevWeek = selectedWeek.week - 1;
-      const year = selectedWeek.year;
-      const response = await apiServices.charges.getByWeek(year, prevWeek);
-      setCharges(response.data || {});
+      await apiServices.chargesHebdo.copyPreviousWeek(
+        selectedWeek.year,
+        selectedWeek.week
+      );
+      await fetchCharges();
       setError(null);
     } catch (err) {
       setError('Erreur lors de la copie des charges');
@@ -103,21 +117,9 @@ const ChargesHebdo = () => {
     }
   };
 
-  const saveCharges = async () => {
-    try {
-      setLoading(true);
-      await apiServices.charges.save(
-        selectedWeek.year,
-        selectedWeek.week,
-        charges
-      );
-      setError(null);
-    } catch (err) {
-      setError('Erreur lors de la sauvegarde des charges');
-      console.error('Erreur:', err);
-    } finally {
-      setLoading(false);
-    }
+  const getChargeValue = (matiereId, type) => {
+    const charge = charges.find(c => c.matiere === matiereId);
+    return charge ? charge[`heures_${type.toLowerCase()}`] : 0;
   };
 
   const filteredMatieres = matieres.filter(matiere =>
@@ -157,34 +159,14 @@ const ChargesHebdo = () => {
           <button className="action-btn" onClick={copyFromPreviousWeek}>
             <FontAwesomeIcon icon={faCopy} /> Copier semaine précédente
           </button>
-          <button className="action-btn save" onClick={saveCharges}>
-            <FontAwesomeIcon icon={faSave} /> Enregistrer
-          </button>
         </div>
       </div>
-
-      {disponibiliteChanges.length > 0 && (
-        <div className="disponibilite-alerts">
-          <h3>
-            <FontAwesomeIcon icon={faExclamationTriangle} /> Changements de disponibilité
-          </h3>
-          <ul>
-            {disponibiliteChanges.map((change, index) => (
-              <li key={index}>
-                {change.enseignant_nom} - {change.jour} {change.creneau}:
-                {change.status === 'removed' ? ' N\'est plus disponible' : ' Est maintenant disponible'}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
 
       <div className="charges-table-container">
         <table className="charges-table">
           <thead>
             <tr>
               <th>Matière</th>
-              <th>Enseignant</th>
               <th>CM</th>
               <th>TD</th>
               <th>TP</th>
@@ -194,12 +176,11 @@ const ChargesHebdo = () => {
             {filteredMatieres.map(matiere => (
               <tr key={matiere.id}>
                 <td>{matiere.nom}</td>
-                <td>{matiere.enseignant_nom}</td>
                 <td>
                   <input
                     type="number"
                     min="0"
-                    value={charges[matiere.id]?.cm || 0}
+                    value={getChargeValue(matiere.id, 'cm')}
                     onChange={(e) => handleChargeChange(matiere.id, 'cm', e.target.value)}
                   />
                 </td>
@@ -207,7 +188,7 @@ const ChargesHebdo = () => {
                   <input
                     type="number"
                     min="0"
-                    value={charges[matiere.id]?.td || 0}
+                    value={getChargeValue(matiere.id, 'td')}
                     onChange={(e) => handleChargeChange(matiere.id, 'td', e.target.value)}
                   />
                 </td>
@@ -215,7 +196,7 @@ const ChargesHebdo = () => {
                   <input
                     type="number"
                     min="0"
-                    value={charges[matiere.id]?.tp || 0}
+                    value={getChargeValue(matiere.id, 'tp')}
                     onChange={(e) => handleChargeChange(matiere.id, 'tp', e.target.value)}
                   />
                 </td>

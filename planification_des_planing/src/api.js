@@ -2,7 +2,7 @@ import axios from "axios";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000", 
+  baseURL: "https://docker-server-m0lg.onrender.com", 
   headers: { "Content-Type": "application/json" },
 });
   
@@ -109,13 +109,17 @@ const apiServices = {
 
   chargesHebdo: {
     list: () => api.get('/api/charges/'),
-    create: (chargeData) => api.post('/api/charges/', chargeData),
-    reconduire: (data) => api.post('/api/charges-reconduire/', data),
+    getByWeek: (year, week) => api.get(`/api/charges/by-week/?year=${year}&week=${week}`),
+    saveWeekCharges: (year, week, charges) => api.post('/api/charges/save-week/', { year, week, charges }),
+    copyPreviousWeek: (year, week) => api.post('/api/charges/copy-previous/', { year, week }),
   },
 
   affectationsEnseignant: {
     list: () => api.get('/api/affectations-enseignant/'),
     create: (affectationData) => api.post('/api/affectations-enseignant/', affectationData),
+    update: (id, affectationData) => api.put(`/api/affectations-enseignant/${id}/`, affectationData),
+    delete: (id) => api.delete(`/api/affectations-enseignant/${id}/`),
+    getByWeek: (year, week) => api.get(`/api/affectations-enseignant/by-week/?year=${year}&week=${week}`),
   },
 
   contraintesHoraires: {
@@ -126,6 +130,9 @@ const apiServices = {
   emploiTemps: {
     list: () => api.get('/api/emploi-temps/'),
     create: (emploiTempsData) => api.post('/api/emploi-temps/', emploiTempsData),
+    generer: () => api.post('/api/generer/'),
+    getByGroupe: (groupeId, semaine) => api.get(`/api/emploi-temps-groupe/${groupeId}/${semaine}/`),
+    getByEnseignant: (enseignantId, semaine) => api.get(`/api/emploi-temps-enseignant/${enseignantId}/${semaine}/`),
   },
 
   clearAuth: () => {

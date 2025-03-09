@@ -8,17 +8,17 @@ const DisponibilitesEnseignants = () => {
   const [enseignants, setEnseignants] = useState([]);
   const [selectedEnseignant, setSelectedEnseignant] = useState(null);
   const [selectedWeek, setSelectedWeek] = useState(getCurrentWeek());
-  const [disponibilites, setDisponibilites] = useState({});
+  const [disponibilites, setDisponibilites] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const timeSlots = [
-    "p1",
-    "p2",
-    "p3",
-    "p4",
-    "p5"
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5"
   ];
 
   const jours = [
@@ -50,6 +50,11 @@ const DisponibilitesEnseignants = () => {
     };
   }
 
+  function getWeekDate(year, week) {
+    const date = new Date(year, 0, 1 + (week - 1) * 7);
+    return date.toISOString().split('T')[0];
+  }
+
   const fetchEnseignants = async () => {
     try {
       setLoading(true);
@@ -67,12 +72,13 @@ const DisponibilitesEnseignants = () => {
   const fetchDisponibilites = async () => {
     try {
       setLoading(true);
-      const response = await apiServices.disponibilites.getByEnseignantAndWeek(
-        selectedEnseignant.id,
-        selectedWeek.year,
-        selectedWeek.week
+      const weekDate = getWeekDate(selectedWeek.year, selectedWeek.week);
+      const response = await apiServices.disponibilites.list();
+      const filteredDispos = response.data.filter(dispo => 
+        dispo.enseignant === selectedEnseignant.id &&
+        dispo.semaine === weekDate
       );
-      setDisponibilites(response.data || {});
+      setDisponibilites(filteredDispos);
       setError(null);
     } catch (err) {
       setError('Erreur lors du chargement des disponibilités');
@@ -82,26 +88,41 @@ const DisponibilitesEnseignants = () => {
     }
   };
 
-  const handleDisponibiliteChange = (jour, creneau) => {
-    setDisponibilites(prev => {
-      const newDispos = { ...prev };
-      const key = `${jour}-${creneau}`;
-      newDispos[key] = !newDispos[key];
-      return newDispos;
-    });
+  const handleDisponibiliteChange = async (jour, creneau) => {
+    try {
+      const weekDate = getWeekDate(selectedWeek.year, selectedWeek.week);
+      const existingDispo = disponibilites.find(
+        d => d.jour === jour && d.creneau === creneau
+      );
+
+      if (existingDispo) {
+        await apiServices.disponibilites.delete(existingDispo.id);
+        setDisponibilites(prev => prev.filter(d => d.id !== existingDispo.id));
+      } else {
+        const newDispo = {
+          enseignant: selectedEnseignant.id,
+          jour: jour,
+          creneau: creneau,
+          semaine: weekDate
+        };
+        const response = await apiServices.disponibilites.create(newDispo);
+        setDisponibilites(prev => [...prev, response.data]);
+      }
+      setError(null);
+    } catch (err) {
+      setError('Erreur lors de la modification des disponibilités');
+      console.error('Erreur:', err);
+    }
   };
 
   const copyFromPreviousWeek = async () => {
     try {
       setLoading(true);
-      const prevWeek = selectedWeek.week - 1;
-      const year = selectedWeek.year;
-      const response = await apiServices.disponibilites.getByEnseignantAndWeek(
-        selectedEnseignant.id,
-        year,
-        prevWeek
-      );
-      setDisponibilites(response.data || {});
+      const response = await apiServices.disponibilites.reconduire({
+        enseignant: selectedEnseignant.id,
+        semaine_actuelle: getWeekDate(selectedWeek.year, selectedWeek.week)
+      });
+      await fetchDisponibilites();
       setError(null);
     } catch (err) {
       setError('Erreur lors de la copie des disponibilités');
@@ -111,22 +132,8 @@ const DisponibilitesEnseignants = () => {
     }
   };
 
-  const saveDisponibilites = async () => {
-    try {
-      setLoading(true);
-      await apiServices.disponibilites.save(
-        selectedEnseignant.id,
-        selectedWeek.year,
-        selectedWeek.week,
-        disponibilites
-      );
-      setError(null);
-    } catch (err) {
-      setError('Erreur lors de la sauvegarde des disponibilités');
-      console.error('Erreur:', err);
-    } finally {
-      setLoading(false);
-    }
+  const isDisponible = (jour, creneau) => {
+    return disponibilites.some(d => d.jour === jour && d.creneau === creneau);
   };
 
   const filteredEnseignants = enseignants.filter(enseignant =>
@@ -187,9 +194,6 @@ const DisponibilitesEnseignants = () => {
                 <button className="action-btn" onClick={copyFromPreviousWeek}>
                   <FontAwesomeIcon icon={faCopy} /> Copier semaine précédente
                 </button>
-                <button className="action-btn save" onClick={saveDisponibilites}>
-                  <FontAwesomeIcon icon={faSave} /> Enregistrer
-                </button>
               </div>
             </div>
 
@@ -209,10 +213,10 @@ const DisponibilitesEnseignants = () => {
                     {jours.map(jour => (
                       <td
                         key={`${jour}-${creneau}`}
-                        className={`calendar-cell ${disponibilites[`${jour}-${creneau}`] ? 'available' : ''}`}
+                        className={`calendar-cell ${isDisponible(jour, creneau) ? 'available' : ''}`}
                         onClick={() => handleDisponibiliteChange(jour, creneau)}
                       >
-                        {disponibilites[`${jour}-${creneau}`] ? '✓' : ''}
+                        {isDisponible(jour, creneau) ? '✓' : ''}
                       </td>
                     ))}
                   </tr>

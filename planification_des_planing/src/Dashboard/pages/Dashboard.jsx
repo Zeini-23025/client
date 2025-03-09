@@ -1,15 +1,5 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faHome,
-  faBook,
-  faChalkboardTeacher,
-  faCalendarAlt,
-  faClipboardList,
-  faCog,
-  faSignOutAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import { Routes, Route } from 'react-router-dom';
 import './Dashboard.css';
 
 import Matieres from './Matieres';
