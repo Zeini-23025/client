@@ -22,6 +22,7 @@ jobs:
       - name: Build and Push Client Image
         uses: docker/build-push-action@v4
         with:
-          context: . 
+          context: planification_des_planing  # Définit le bon répertoire
+          file: planification_des_planing/Dockerfile  # Spécifie le Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/docker-client:latest
