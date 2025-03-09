@@ -19,7 +19,7 @@ const Enseignants = () => {
     nom: '',
     identifiant: '',
     email: '',
-    telephone: '' // Ajoutez ce champ
+   
   };
 
   const [formData, setFormData] = useState(initialFormState);
@@ -104,7 +104,7 @@ const Enseignants = () => {
         nom: formData.nom,
         identifiant: formData.identifiant,
         email: formData.email,
-        telephone: formData.telephone // Ajoutez ce champ
+        
       };
 
       if (currentEnseignant) {
@@ -138,7 +138,7 @@ const Enseignants = () => {
       nom: enseignant.nom,
       identifiant: enseignant.identifiant,
       email: enseignant.email,
-      telephone: enseignant.telephone // Ajoutez ce champ
+      
     });
     setShowModal(true);
   };
@@ -162,8 +162,8 @@ const Enseignants = () => {
   const filteredEnseignants = enseignants.filter(enseignant =>
     enseignant.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
     enseignant.identifiant.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    enseignant.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    enseignant.telephone.toLowerCase().includes(searchTerm.toLowerCase()) // Ajoutez ce champ
+    enseignant.email.toLowerCase().includes(searchTerm.toLowerCase()) 
+    // Ajoutez ce champ
   );
 
   if (loading && !enseignants.length) {
@@ -199,7 +199,7 @@ const Enseignants = () => {
               <th>Identifiant</th>
               <th>Nom</th>
               <th>Email</th>
-              <th>Téléphone</th> {/* Nouvelle colonne */}
+              
               <th>Actions</th>
             </tr>
           </thead>
@@ -209,7 +209,7 @@ const Enseignants = () => {
                 <td>{enseignant.identifiant}</td>
                 <td>{enseignant.nom}</td>
                 <td>{enseignant.email}</td>
-                <td>{enseignant.telephone}</td> {/* Nouvelle colonne */}
+               
                 <td className="actions-cell">
                   <button 
                     className="action-btn edit"
@@ -280,20 +280,7 @@ const Enseignants = () => {
                     <span className="error-text">{formErrors.email}</span>
                   )}
                 </div>
-                <div className="form-group">
-                  <label>Téléphone</label>
-                  <input
-                    type="text"
-                    name="telephone"
-                    value={formData.telephone}
-                    onChange={handleInputChange}
-                    required
-                    disabled={loading}
-                  />
-                  {formErrors.telephone && (
-                    <span className="error-text">{formErrors.telephone}</span>
-                  )}
-                </div>
+                
                 <div className="modal-actions">
                   <button type="submit" className="submit-btn" disabled={loading}>
                     {loading ? 'Chargement...' : currentEnseignant ? 'Modifier' : 'Ajouter'}
