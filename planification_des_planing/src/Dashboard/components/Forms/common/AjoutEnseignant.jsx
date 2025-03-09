@@ -13,9 +13,9 @@ const AjoutEnseignant = () => {
         id: '',
         id: '',
         nom: '',
-        prenom: '',
+        
         email: '',
-        telephone: ''
+        
     });
 
     const handleSubmit = (e) => {
@@ -45,16 +45,7 @@ const AjoutEnseignant = () => {
                                 />
                             </div>
 
-                            <div className="form-group">
-                                <label>Prénom</label>
-                                <input 
-                                    type="text" 
-                                    value={formData.prenom}
-                                    onChange={(e) => setFormData({...formData, prenom: e.target.value})}
-                                    required
-                                    placeholder="Entrez le prénom"
-                                />
-                            </div>
+                            
                         </div>
 
                         <div className="form-row">
@@ -69,15 +60,7 @@ const AjoutEnseignant = () => {
                                 />
                             </div>
 
-                            <div className="form-group">
-                                <label>Téléphone</label>
-                                <input 
-                                    type="tel" 
-                                    value={formData.telephone}
-                                    onChange={(e) => setFormData({...formData, telephone: e.target.value})}
-                                    placeholder="Votre Numero "
-                                />
-                            </div>
+                            
                         </div>
 
                         
@@ -85,7 +68,7 @@ const AjoutEnseignant = () => {
 
                     <div className="form-footer">
                         <button 
-                            type="button" 
+                             type="button" 
                             className="cancel-btn"
                             onClick={() => navigate('/dashboard/enseignants')}
                         >
